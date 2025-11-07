@@ -1,6 +1,6 @@
 # Xtream IPTV Codes 2025 Free: 7-Day Trial Codes + 1–6 Months Free via CPA Offers + Affordable Subscriptions
 
-![Xtream IPTV Banner](https://your-image-link.com/banner.jpg) <!-- Replace with actual banner image -->
+![Xtream IPTV Banner](https://www.iptvsmarters.com/wp-content/uploads/2025/09/Iptv-banner-2.png) <!-- Replace with actual banner image -->
 
 **Last Updated: November 2025**  
 Get **free Xtream IPTV codes** valid for **7 days** on the **France-OTT** server. Perfect for streaming live TV, sports, movies, and series in **4K, FHD, and HD** on apps like **IPTV Smarters Pro**, **TiviMate**, or **VLC**. Plus, learn how to get **1–6 months of free IPTV** through CPA offers or grab budget-friendly subscriptions starting at **$2/month**!

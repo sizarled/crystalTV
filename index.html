@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crystal - Premium Streaming Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #b1100e;
+            --primary-dark: #8a0c0a;
+            --primary-light: #d43f3a;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url('https://ik.imagekit.io/vtclca4kv/437ba097-995f-4494-bbf6-5c95de7fd953.png?updatedAt=1759839398989');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.7) 50%, rgba(10, 10, 10, 0.4) 100%);
+            z-index: -1;
+        }
+
+        .content-container {
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .logo {
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo img {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        }
+
+        .welcome-text {
+            margin-bottom: 50px;
+            animation: fadeInLeft 1s ease-out 0.3s both;
+        }
+
+        .welcome-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .welcome-text p {
+            font-size: 1.3rem;
+            color: var(--light);
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            opacity: 0.9;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 400px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateX(2px) scale(0.98);
+        }
+
+        .btn i {
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-align: left;
+            opacity: 0.7;
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: scaleIn 0.3s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: var(--light);
+            font-size: 1.8rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-light);
+        }
+
+        /* Right side decorative elements */
+        .right-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .feature-highlights {
+            max-width: 500px;
+            background: rgba(18, 18, 18, 0.7);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            animation: fadeInRight 1s ease-out 0.9s both;
+        }
+
+        .feature-highlights h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--light);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-light);
+        }
+
+        .feature span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .content-container {
+                max-width: 100%;
+                height: auto;
+                padding: 30px 20px;
+            }
+            
+            .right-side {
+                padding: 20px;
+            }
+            
+            .feature-highlights {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .welcome-text h1 {
+                font-size: 2.2rem;
+            }
+            
+            .welcome-text p {
+                font-size: 1.1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <div class="logo">
+            <img src="./CRYSTAL.png" alt="Crystal Logo">
+        </div>
+        
+        <div class="welcome-text">
+            <h1>Welcome to Crystal</h1>
+            <p>The largest platform for watching channels, movies, and series with premium quality and unlimited entertainment.</p>
+        </div>
+        
+        <div class="buttons-container">
+            <button class="btn" id="subscriptionBtn">
+                <i class="fas fa-tv"></i> IPTV Subscription
+            </button>
+            <button class="btn" id="listBtn">
+                <i class="fas fa-list"></i> IPTV List
+            </button>
+            <button class="btn" id="playersBtn">
+                <i class="fas fa-play-circle"></i> IPTV Players
+            </button>
+            <button class="btn" id="instructionsBtn">
+                <i class="fas fa-info-circle"></i> IPTV Instructions
+            </button>
+            <button class="btn" id="exitBtn">
+                <i class="fas fa-sign-out-alt"></i> Exit
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 Crystal. All rights reserved. | Premium Streaming Experience</p>
+        </div>
+    </div>
+
+    <div class="right-side">
+        <div class="feature-highlights">
+            <h2>Why Choose Crystal?</h2>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-film"></i>
+                    <span>20,000+ Channels</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-video"></i>
+                    <span>60,000+ Movies & Series</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-hd-video"></i>
+                    <span>4K Ultra HD Quality</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-globe"></i>
+                    <span>Global Content</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Multi-Device Support</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-headset"></i>
+                    <span>24/7 Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for IPTV List selection -->
+    <div class="modal" id="listModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2>Choose Your IPTV Plan</h2>
+            <p>Select between our Standard and Premium plans to get started:</p>
+            <div class="modal-buttons">
+                <button class="modal-btn" id="standardBtn">
+                    <i class="fas fa-star"></i> Standard Plan
+                </button>
+                <button class="modal-btn" id="premiumBtn">
+                    <i class="fas fa-crown"></i> Premium Plan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio element for button sounds -->
+    <audio id="buttonSound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2025/05/05/audio_139486a873.mp3?filename=select-001-337218.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Audio element
+        const buttonSound = document.getElementById('buttonSound');
+        
+        // Play sound function
+        function playButtonSound() {
+            buttonSound.currentTime = 0;
+            buttonSound.play().catch(e => console.log("Audio play failed:", e));
+        }
+        
+        // Button functionality
+        document.getElementById('subscriptionBtn').addEventListener('click', function() {
+            playButtonSound();
+            setTimeout(() => {
+                window.open('https://crystaltv.netlify.app/IPTV-Sub.html', '_blank');
+            }, 300);
+        });
+
+        // IPTV List button - opens modal
+        document.getElementById('listBtn').addEventListener('click', function() {
+            playButtonSound();
+            document.getElementById('listModal').style.display = 'flex';
+        });
+
+        // Standard plan button
+        document.getElementById('standardBtn').addEventListener('click', function() {
+            playButtonSound();
+            window.open('https://crystaltv.netlify.app/Standard-channels/index.html', '_blank');
+            document.getElementById('listModal').style.display = 'none';
+        });
+
+        // Premium plan button
+        document.getElementById('premiumBtn').addEventListener('click', function() {
+            playButtonSound();
+            window.open('https://crystaltv.netlify.app/Premuim-channels/index.html', '_blank');
+            document.getElementById('listModal').style.display = 'none';
+        });
+
+        // IPTV Players button
+        document.getElementById('playersBtn').addEventListener('click', function() {
+            playButtonSound();
+            setTimeout(() => {
+                window.open('https://www.iptvsmarters.com/#downloads', '_blank');
+            }, 300);
+        });
+
+        // IPTV Instructions button
+        document.getElementById('instructionsBtn').addEventListener('click', function() {
+            playButtonSound();
+            setTimeout(() => {
+                window.open('https://drive.google.com/file/d/1XNH-LgN4-r6Fl-i16pk5KvUj5foh9THJ/view?usp=sharing', '_blank');
+            }, 300);
+        });
+
+        // Exit button
+        document.getElementById('exitBtn').addEventListener('click', function() {
+            playButtonSound();
+            setTimeout(() => {
+                if(confirm('Are you sure you want to exit?')) {
+                    // Close the window/tab
+                    window.close();
+                    // If window.close() doesn't work, redirect to a blank page
+                    if (!window.closed) {
+                        window.location.href = 'about:blank';
+                    }
+                }
+            }, 300);
+        });
+
+        // Close modal when clicking the X
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('listModal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('listModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
